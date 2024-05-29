@@ -1418,6 +1418,11 @@ class BIMViewer extends Controller {
       this._propertiesInspector.showObjectPropertySets(objectId);
     }
     this.fire("openInspector", {});
+
+    const myInspectors = document.getElementsByClassName('my-inspector');
+      for (let i = 0; i < myInspectors.length; i++) {
+        myInspectors[i].style.display = 'block';
+    }
   }
 
   /**
