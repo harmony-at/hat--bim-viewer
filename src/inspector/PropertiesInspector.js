@@ -68,7 +68,7 @@ class PropertiesInspector extends Controller {
         if (!metaObject) {
             return;
         }
-        const propertySets = metaObject.propertySets ? metaObject.propertySets : metaObject.propertySetIds;
+        const propertySets = metaObject?.propertySets;
         if (propertySets && propertySets.length > 0) {
             this._setPropertySets(metaObject, propertySets);
         } else {

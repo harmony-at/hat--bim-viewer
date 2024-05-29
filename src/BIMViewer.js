@@ -1421,6 +1421,7 @@ class BIMViewer extends Controller {
 
     const myInspectors = document.getElementsByClassName('my-inspector');
       for (let i = 0; i < myInspectors.length; i++) {
+        console.log('showInspector');
         myInspectors[i].style.display = 'block';
     }
   }
