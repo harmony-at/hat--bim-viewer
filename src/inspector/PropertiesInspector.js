@@ -41,17 +41,24 @@ class PropertiesInspector extends Controller {
             this.clear();
         });
 
-        document.addEventListener('click', this._clickListener = (e) => {
-            if (!e.target.matches('.xeokit-accordion .xeokit-accordion-button')) {
+        document.addEventListener(
+            'click',
+            (this._clickListener = (e) => {
+              if (!e.target.matches('.xeokit-accordion .xeokit-accordion-button')) {
                 return;
-            } else {
+              }
+      
+              e.stopImmediatePropagation();
+      
+              requestAnimationFrame(() => {
                 if (!e.target.parentElement.classList.contains('active')) {
-                    e.target.parentElement.classList.add('active');
+                  e.target.parentElement.classList.add('active');
                 } else {
-                    e.target.parentElement.classList.remove('active');
+                  e.target.parentElement.classList.remove('active');
                 }
-            }
-        });
+              });
+            })
+        );
 
         this.clear();
     }
@@ -61,7 +68,7 @@ class PropertiesInspector extends Controller {
         if (!metaObject) {
             return;
         }
-        const propertySets = metaObject.propertySets;
+        const propertySets = metaObject.propertySets ? metaObject.propertySets : metaObject.propertySetIds;
         if (propertySets && propertySets.length > 0) {
             this._setPropertySets(metaObject, propertySets);
         } else {
@@ -109,7 +116,7 @@ class PropertiesInspector extends Controller {
                 html.push(`<div class="xeokit-accordion">`);
                 for (let i = 0, len = propertySets.length; i < len; i++) {
                     const propertySet = propertySets[i];
-                    const properties = propertySet.properties || [];
+                    const properties = propertySet?.properties || [];
                     if (properties.length > 0) {
                         html.push(`<div class="xeokit-accordion-container">
                                         <p class="xeokit-accordion-button"><span></span>${propertySet.name}</p>                                       

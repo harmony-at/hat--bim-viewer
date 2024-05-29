@@ -58,7 +58,7 @@
     "auto-changelog": "^2.4.0"
   },
   "dependencies": {
-    "@xeokit/xeokit-sdk": "2.6.10",
+    "@xeokit/xeokit-sdk": "git+https://github.com/harmony-at/hat-xeokit-sdk.git#d4c7692eb4e95eacacb1a89db5d3fd15c97323e0",
     "http-server": "^13.0.2"
   }
 }

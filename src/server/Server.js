@@ -50,9 +50,8 @@ class Server {
      * @param {Function} done Callback through which the JSON result is returned.
      * @param {Function} error Callback through which an error message is returned on error.
      */
-    getMetadata(projectId, modelId, done, error) {
-        const url = this._dataDir + "/projects/" + projectId + "/models/" + modelId + "/metadata.json";
-        utils.loadJSON(url, done, error);
+    getMetadata(urlMeta, done, error) {
+      utils.loadJSON(urlMeta, done, error);
     }
 
     /**
@@ -63,8 +62,7 @@ class Server {
      * @param {Function} done Callback through which the JSON result is returned.
      * @param {Function} error Callback through which an error message is returned on error.
      */
-    getGeometry(projectId, modelId, done, error) {
-        const url = this._dataDir + "/projects/" + projectId + "/models/" + modelId + "/geometry.xkt";
+    getGeometry(url, done, error) {
         utils.loadArraybuffer(url, done, error);
     }
 
