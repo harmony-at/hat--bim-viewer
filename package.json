@@ -48,17 +48,17 @@
   "homepage": "https://github.com/xeokit/xeokit-bim-viewer#readme",
   "devDependencies": {
     "@rollup/plugin-node-resolve": "^13.2.1",
+    "auto-changelog": "^2.4.0",
     "autoprefixer": "^9.8.6",
     "copyfiles": "^2.4.1",
     "esdoc": "^1.1.0",
     "esdoc-standard-plugin": "^1.0.0",
     "puppeteer": "^10.1.0",
     "rollup": "^2.70.2",
-    "rollup-plugin-terser": "^7.0.2",
-    "auto-changelog": "^2.4.0"
+    "rollup-plugin-terser": "^7.0.2"
   },
   "dependencies": {
-    "@xeokit/xeokit-sdk": "git+https://github.com/harmony-at/hat-xeokit-sdk.git#d4c7692eb4e95eacacb1a89db5d3fd15c97323e0",
+    "@xeokit/xeokit-sdk": "github:harmony-at/hat-xeokit-sdk#61fab4d623287c8a5a31ae05e99f08f69239be24",
     "http-server": "^13.0.2"
   }
 }

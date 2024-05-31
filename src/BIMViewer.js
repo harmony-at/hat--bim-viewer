@@ -66,7 +66,14 @@ function createExplorerTemplate(cfg) {
             <span class="xeokit-i18n" data-xeokit-i18n="objectsExplorer.title">Objects</span>
            </a>
           <div class="xeokit-tab-content">
-           <div class="xeokit-btn-group">
+          <div class="xeokit-tab-switch">
+                <span class="xeokit-i18n" data-xeokit-i18n="modelsExplorer.loadAll" data-xeokit-i18ntip="modelsExplorer.loadAllTip" data-tippy-content="Show all models"> Show all</span>
+                <label class="switch">
+                  <input type="checkbox" class="xeokit-check-loadAllObjects" checked>
+                  <span class="slider round"></span>
+                </label>
+              </div>
+           <div class="xeokit-btn-group" style="display: none;">
               <button type="button" class="xeokit-i18n xeokit-showAllObjects xeokit-btn disabled" data-xeokit-i18n="objectsExplorer.showAll" data-xeokit-i18ntip="objectsExplorer.showAllTip" data-tippy-content="Show all objects">Show all</button>
               <button type="button" class="xeokit-i18n xeokit-hideAllObjects xeokit-btn disabled" data-xeokit-i18n="objectsExplorer.hideAll" data-xeokit-i18ntip="objectsExplorer.hideAllTip" data-tippy-content="Hide all objects">Hide all</button>
           </div>
@@ -79,7 +86,14 @@ function createExplorerTemplate(cfg) {
             <span class="xeokit-i18n" data-xeokit-i18n="classesExplorer.title">Class</span>
           </a>
           <div class="xeokit-tab-content">
-              <div class="xeokit-btn-group">
+                <div class="xeokit-tab-switch">
+                    <span class="xeokit-i18n" data-xeokit-i18n="modelsExplorer.loadAll" data-xeokit-i18ntip="modelsExplorer.loadAllTip" data-tippy-content="Show all models"> Show all</span>
+                    <label class="switch">
+                        <input type="checkbox" class="xeokit-check-loadAllClasses" checked>
+                        <span class="slider round"></span>
+                    </label>
+                </div>
+                <div class="xeokit-btn-group" style="display: none;">
                   <button type="button" class="xeokit-i18n xeokit-showAllClasses xeokit-btn disabled" data-xeokit-i18n="classesExplorer.showAll"  data-xeokit-i18ntip="classesExplorer.hideAllTip" data-tippy-content="Show all classes">Show all</button>
                   <button type="button" class="xeokit-i18n xeokit-hideAllClasses xeokit-btn disabled" data-xeokit-i18n="classesExplorer.hideAll" data-xeokit-i18ntip="classesExplorer.hideAllTip" data-tippy-content="Hide all classes">Hide all</button>
               </div>
@@ -92,7 +106,14 @@ function createExplorerTemplate(cfg) {
             <span class="xeokit-i18n" data-xeokit-i18n="storeysExplorer.title">Storeys</span>
           </a>
           <div class="xeokit-tab-content">
-           <div class="xeokit-btn-group">
+              <div class="xeokit-tab-switch">
+                    <span class="xeokit-i18n" data-xeokit-i18n="modelsExplorer.loadAll" data-xeokit-i18ntip="modelsExplorer.loadAllTip" data-tippy-content="Show all models"> Show all</span>
+                    <label class="switch">
+                        <input type="checkbox" class="xeokit-check-loadAllStoreys" checked>
+                        <span class="slider round"></span>
+                    </label>
+              </div>
+              <div class="xeokit-btn-group" style="display: none;">
                   <button type="button" class="xeokit-i18n xeokit-showAllStoreys xeokit-btn disabled" data-xeokit-i18n="storeysExplorer.showAll" data-xeokit-i18ntip="storeysExplorer.showAllTip" data-tippy-content="Show all storeys">Show all</button>
                   <button type="button" class="xeokit-i18n xeokit-hideAllStoreys xeokit-btn disabled" data-xeokit-i18n="storeysExplorer.hideAll" data-xeokit-i18ntip="storeysExplorer.hideAllTip" data-tippy-content="Hide all storeys">Hide all</button>
               </div>
@@ -593,6 +614,42 @@ class BIMViewer extends Controller {
           event.target.checked ? this.loadAllModels() : this.unloadAllModels();
     });
 
+    explorerElement
+        .querySelector('.xeokit-check-loadAllClasses')
+        .addEventListener("change", (event) => {
+          if(event.target.checked) {
+            this.setAllObjectsVisible(true);
+            this.setAllObjectsXRayed(false);
+          } else {
+            this.setAllObjectsVisible(false);
+          }
+          this._setCheckedSwitch(event.target.checked);
+    });
+
+    explorerElement
+        .querySelector('.xeokit-check-loadAllStoreys')
+        .addEventListener("change", (event) => {
+          if(event.target.checked) {
+            this.setAllObjectsVisible(true);
+            this.setAllObjectsXRayed(false);
+          } else {
+            this.setAllObjectsVisible(false);
+          }
+          this._setCheckedSwitch(event.target.checked);
+    });
+
+    explorerElement
+        .querySelector('.xeokit-check-loadAllObjects')
+        .addEventListener("change", (event) => {
+          if(event.target.checked) {
+            this.setAllObjectsVisible(true);
+            this.setAllObjectsXRayed(false);
+          } else {
+            this.setAllObjectsVisible(false);
+          }
+          this._setCheckedSwitch(event.target.checked);
+    });
+
     this._bcfViewpointsPlugin = new BCFViewpointsPlugin(this.viewer, {
       xrayAsZeroAlpha: true,
     });
@@ -625,6 +682,21 @@ class BIMViewer extends Controller {
   get localeService() {
     return this.viewer.localeService;
   }
+
+  _setCheckedSwitch(value) {
+    const switchClasses = [
+        '.xeokit-check-loadAllClasses',
+        '.xeokit-check-loadAllStoreys',
+        '.xeokit-check-loadAllObjects'
+    ];
+    
+    switchClasses.forEach(switchClass => {
+        const switches = document.querySelectorAll(switchClass);
+        switches.forEach(switchElement => {
+            switchElement.checked = value;
+        });
+    });
+   }
 
   _customizeViewer() {
     const scene = this.viewer.scene;
