@@ -1155,7 +1155,7 @@ class BIMViewer extends Controller {
    * @param {Function} done Callback invoked on success.
    * @param {Function} error Callback invoked on failure, into which the error message string is passed.
    */
-  loadProject(models, viewerConfigs, done, error) {
+  loadProject(models, viewerConfigs, edges, done, error) {
     if (!models) {
       this.error("loadProject() - Argument expected: objectId");
       return;
@@ -1163,6 +1163,7 @@ class BIMViewer extends Controller {
     this._modelsExplorer.loadProject(
       models,
       viewerConfigs,
+      edges,
       () => {
         if (done) {
           done();

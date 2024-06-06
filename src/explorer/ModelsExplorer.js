@@ -112,10 +112,11 @@ import {
       this._xktLoader.objectDefaults = objectColors;
     }
   
-    loadProject(models, viewerConfigs, done, error) {
+    loadProject(models, viewerConfigs, edges, done, error) {
       this.unloadProject();
       this._modelsInfo = {};
       this._numModels = 0;
+      this._edges = edges;
   
       this._models = models;
       this._parseProject(models, viewerConfigs);
@@ -378,7 +379,7 @@ import {
           scale: modelInfo.scale,
           rotation: modelInfo.rotation,
           matrix: modelInfo.matrix,
-          edges: false,
+          edges: this._edges,
           saoEnabled: modelInfo.saoEnabled,
           pbrEnabled: modelInfo.pbrEnabled,
           backfaces: modelInfo.backfaces,
@@ -404,7 +405,7 @@ import {
               scale: modelInfo.scale,
               rotation: modelInfo.rotation,
               matrix: modelInfo.matrix,
-              edges: true,
+              edges: this._edges,
               saoEnabled: modelInfo.saoEnabled,
               pbrEnabled: modelInfo.pbrEnabled,
               backfaces: modelInfo.backfaces,
