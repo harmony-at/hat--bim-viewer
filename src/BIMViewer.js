@@ -57,7 +57,7 @@ function createExplorerTemplate(cfg) {
                   <button type="button" class="xeokit-i18n xeokit-loadAllModels xeokit-btn disabled" data-xeokit-i18n="modelsExplorer.loadAll" data-xeokit-i18ntip="modelsExplorer.loadAllTip" data-tippy-content="Load all models">Load all</button>
                   <button type="button" class="xeokit-i18n xeokit-unloadAllModels xeokit-btn disabled" data-xeokit-i18n="modelsExplorer.unloadAll"  data-xeokit-i18ntip="modelsExplorer.unloadAllTip" data-tippy-content="Unload all models">Unload all</button>
               </div>
-              <div class="xeokit-models" ></div>
+              <div class="xeokit-models" id="xeokitModels"></div>
           </div>
       </div>
       <div class="xeokit-tab xeokit-objectsTab">
@@ -868,6 +868,25 @@ class BIMViewer extends Controller {
   }
 
   /**
+   * view doc
+  */
+  setIsUploadDocTrue(callback, link) {
+    if (typeof callback === 'function') {
+        callback(true, link);
+    }
+   }
+
+  triggerViewDocState(link) {
+    if (this.callback) {
+        this.setIsUploadDocTrue(this.callback, link);
+    }
+  }
+
+  setCallback(callback) {
+    this.callback = callback;
+  }
+
+  /**
    * Sets a batch of viewer configurations.
    *
    * Note that this method is not to be confused with {@link BIMViewer#setViewerState}, which batch-updates various states of the viewer's UI and 3D view.
@@ -1444,6 +1463,10 @@ class BIMViewer extends Controller {
     this.set3DEnabled(activateThreeDMode, done);
   }
 
+  //demo
+  pdfAdd(list) {
+    this._propertiesInspector.addPropertySet(list);
+  }
   /**
    * Highlights the given object in the tree views within the Objects, Classes and Storeys tabs.
    *
@@ -2340,6 +2363,26 @@ class BIMViewer extends Controller {
     this._bcfViewpointsPlugin.destroy();
     this._canvasContextMenu.destroy();
     this._objectContextMenu.destroy();
+  }
+
+  /**
+   * get infor camera viewer.
+   */
+  getCamera() {
+    const viewer = this.viewer;
+    return {'eye': viewer.camera.eye.slice(), 'look': viewer.camera.look.slice(), 'up': viewer.camera.up.slice()};
+  }
+
+  /**
+   * zoom to infor camera.
+   */
+
+  zoomCamera(camera) {
+    const viewer = this.viewer;
+    viewer.camera.eye = camera.eye;
+    viewer.camera.look = camera.look;
+    viewer.camera.up = camera.up;
+    // viewer.camera.update();
   }
 }
 

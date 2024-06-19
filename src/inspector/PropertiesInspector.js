@@ -16,6 +16,8 @@ class PropertiesInspector extends Controller {
         }
 
         this._metaObject = null;
+        this._parent = parent;
+        this._propertiSets = [];
 
         this._propertiesTabElement = cfg.propertiesTabElement;
         this._propertiesElement = cfg.propertiesElement;
@@ -59,8 +61,19 @@ class PropertiesInspector extends Controller {
               });
             })
         );
+        this.init();
 
         this.clear();
+    }
+
+    init() {
+        const propertiesElement = this._propertiesElement;
+        propertiesElement.addEventListener('dblclick', (event) => {
+            if (event.target.classList.contains('td2')) {
+                const propertyValue = event.target.innerText;
+                this._parent.triggerViewDocState(propertyValue);
+            }
+        });
     }
 
     showObjectPropertySets(objectId) {
@@ -70,6 +83,7 @@ class PropertiesInspector extends Controller {
         }
         const propertySets = metaObject?.propertySetIds;
         if (propertySets && propertySets.length > 0) {
+            this._propertiSets = propertySets;
             this._setPropertySets(metaObject, propertySets);
         } else {
             this._setPropertySets(metaObject);
@@ -85,6 +99,17 @@ class PropertiesInspector extends Controller {
         html.push(`</div>`);
         const htmlStr = html.join("");
        this._propertiesElement.innerHTML = htmlStr;
+    }
+
+    addPropertySet(list ) {
+        const newPropertySet = {
+            "name": "Document",
+            "properties": list,
+        };
+        let properties = this._propertiSets;
+
+        properties.push(newPropertySet);
+        this._setPropertySets(this._metaObject, properties);
     }
 
     _setPropertySets(metaObject, propertySets) {
