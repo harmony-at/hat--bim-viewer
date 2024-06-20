@@ -11,6 +11,10 @@ class SelectionTool extends Controller {
             throw "Missing config: buttonElement";
         }
 
+        //themmoi206
+        this._parent = parent;
+        //endthemmoi206
+
         const buttonElement = cfg.buttonElement;
 
         this.on("enabled", (enabled) => {
@@ -29,6 +33,9 @@ class SelectionTool extends Controller {
                         return;
                     }
                   pickResult.entity.selected = !pickResult.entity.selected;
+                  //themmoi206
+                  this._parent.showInspector(pickResult.entity.id);
+                  //endthemmoi206
                 });
             } else {
                 buttonElement.classList.remove("active");

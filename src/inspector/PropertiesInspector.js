@@ -18,6 +18,9 @@ class PropertiesInspector extends Controller {
         this._metaObject = null;
         this._parent = parent;
         this._propertiSets = [];
+        //themmoi206
+        this._modelId = null;
+         //endthemmoi206
 
         this._propertiesTabElement = cfg.propertiesTabElement;
         this._propertiesElement = cfg.propertiesElement;
@@ -113,6 +116,9 @@ class PropertiesInspector extends Controller {
     }
 
     _setPropertySets(metaObject, propertySets) {
+        //themmoi206
+        this._modelId = metaObject.metaModels.id;
+         //endthemmoi206
         const html = [];
         html.push(`<div class="element-attributes">`);
         if (!metaObject) {

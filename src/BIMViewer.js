@@ -867,6 +867,16 @@ class BIMViewer extends Controller {
     });
   }
 
+  //themmoi206
+  /**
+   * select prt to view inspector
+   */
+  showInspector(id) {
+    this._propertiesInspector.showObjectPropertySets(id);
+  }
+
+  //endthemmoi206
+
   /**
    * view doc
   */

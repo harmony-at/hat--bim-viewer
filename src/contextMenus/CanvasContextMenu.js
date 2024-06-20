@@ -58,6 +58,17 @@ class CanvasContextMenu extends ContextMenu {
                     },
                     {
                         getTitle: (context) => {
+                          return context.viewer.localeService.translate("canvasContextMenu.hideSelected") || "Hide selected";
+                        },
+                        getEnabled: (context) => {
+                          return context.viewer.scene.selectedObjectIds.length > 0
+                        },
+                        doAction: (context) => {
+                          context.viewer.scene.setObjectsVisible(context.viewer.scene.selectedObjectIds, false);
+                        }
+                      },
+                    {
+                        getTitle: (context) => {
                             return context.viewer.localeService.translate("canvasContextMenu.showAll") || "Show All";
                         },
                         getEnabled: (context) => {
