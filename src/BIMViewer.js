@@ -306,6 +306,9 @@ class BIMViewer extends Controller {
      * @type {Viewer}
      */
     this.viewer = viewer;
+    //themmoi2062
+    this._idModelIns = null;
+    //endthemmoi2062
 
     this._objectsKdTree3 = new ObjectsKdTree3({
       viewer,
@@ -872,6 +875,9 @@ class BIMViewer extends Controller {
    * select prt to view inspector
    */
   showInspector(id) {
+    //themmoi2062
+    this._idModelIns = id;
+    //endthemmoi2062
     this._propertiesInspector.showObjectPropertySets(id);
   }
 
@@ -882,13 +888,15 @@ class BIMViewer extends Controller {
   */
   setIsUploadDocTrue(callback, link) {
     if (typeof callback === 'function') {
-        callback(true, link);
+        callback(link);
     }
    }
 
   triggerViewDocState(link) {
     if (this.callback) {
+    //themmoi2062
         this.setIsUploadDocTrue(this.callback, link);
+    //endthemmoi2062
     }
   }
 
@@ -896,6 +904,26 @@ class BIMViewer extends Controller {
     this.callback = callback;
   }
 
+  //themmoi2062
+  /**
+   * get data properties
+  */
+  setDataProperties(dataCallback, data) {
+    if (typeof dataCallback === 'function') {
+        dataCallback(data);
+    }
+   }
+
+  triggerDataPropertieState(data) {
+    if (this.dataCallback) {
+        this.setDataProperties(this.dataCallback, data);
+    }
+  }
+
+  setDataCallback(dataCallback) {
+    this.dataCallback = dataCallback;
+  }
+//endthemmoi2062
   /**
    * Sets a batch of viewer configurations.
    *
@@ -1184,7 +1212,7 @@ class BIMViewer extends Controller {
    * @param {Function} done Callback invoked on success.
    * @param {Function} error Callback invoked on failure, into which the error message string is passed.
    */
-  loadProject(models, viewerConfigs, edges, done, error) {
+  loadProject(models, viewerConfigs, edges, lstModelUncheck, done, error) {
     if (!models) {
       this.error("loadProject() - Argument expected: objectId");
       return;
@@ -1193,6 +1221,7 @@ class BIMViewer extends Controller {
       models,
       viewerConfigs,
       edges,
+      lstModelUncheck,
       () => {
         if (done) {
           done();
@@ -1521,6 +1550,9 @@ class BIMViewer extends Controller {
       return;
     }
     if (this._enablePropertiesInspector) {
+      //themmoi2062
+      this._idModelIns= objectId;
+      //endthemmoi2062
       this._propertiesInspector.showObjectPropertySets(objectId);
     }
     this.fire("openInspector", {});
@@ -2394,6 +2426,23 @@ class BIMViewer extends Controller {
     viewer.camera.up = camera.up;
     // viewer.camera.update();
   }
+  //themmoi2062
+  /**
+   * rerender project
+  */
+ rerenderProject() {
+  const myInspectors = document.getElementsByClassName('my-inspector');
+    for (let i = 0; i < myInspectors.length; i++) {
+      myInspectors[i].style.display = 'inline';
+  }
+  this.showObjectProperties(this._idModelIns);
+}
+
+getIdModelIns() {
+  return this._idModelIns;
+}
+  
+  //endthemmoi2062
 }
 
 export { BIMViewer };

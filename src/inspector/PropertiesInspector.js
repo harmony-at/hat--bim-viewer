@@ -85,6 +85,9 @@ class PropertiesInspector extends Controller {
             return;
         }
         const propertySets = metaObject?.propertySetIds;
+        //themmoi2062
+        this._parent.triggerDataPropertieState({idModel: metaObject.metaModels[0].id, objectId: objectId,  uuid: metaObject.originalSystemId});
+        //endthemmoi2062
         if (propertySets && propertySets.length > 0) {
             this._propertiSets = propertySets;
             this._setPropertySets(metaObject, propertySets);

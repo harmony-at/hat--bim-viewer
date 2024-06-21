@@ -112,7 +112,7 @@ import {
       this._xktLoader.objectDefaults = objectColors;
     }
   
-    loadProject(models, viewerConfigs, edges, done, error) {
+    loadProject(models, viewerConfigs, edges, lstModelUncheck, done, error) {
       this.unloadProject();
       this._modelsInfo = {};
       this._numModels = 0;
@@ -120,14 +120,15 @@ import {
   
       this._models = models;
       this._parseProject(models, viewerConfigs);
-      this._loadAllModels(models, done);
+      this._loadAllModels(models, done, lstModelUncheck);
     }
   
-    _loadAllModels(models, done) {
+    _loadAllModels(models, done, lstModelUncheck) {
       this._modelsExplorer = models;
       const modelIds = models.map((item) => item.id);
+      const uniqueIds = modelIds.filter(id => !lstModelUncheck.includes(id));
   
-      this._loadModelsSequentially(modelIds, 0, done);
+      this._loadModelsSequentially(uniqueIds, 0, done);
     }
   
     _loadModelsSequentially(modelIds, index, done) {
@@ -393,30 +394,43 @@ import {
         // Load single XKT/Metamodel file model;
         // Uses the BIMViewer's Server strategy directly
   
+        //themmoi2062
         this.server.getGeometry(
           url,
           (arraybuffer) => {
-            const model = this._xktLoader.load({
-              id: modelId,
-              metaModelData: json,
-              xkt: arraybuffer,
-              excludeUnclassifiedObjects: true,
-              origin: modelInfo.origin || modelInfo.position,
-              scale: modelInfo.scale,
-              rotation: modelInfo.rotation,
-              matrix: modelInfo.matrix,
-              edges: this._edges,
-              saoEnabled: modelInfo.saoEnabled,
-              pbrEnabled: modelInfo.pbrEnabled,
-              backfaces: modelInfo.backfaces,
-              globalizeObjectIds: true,
-              reuseGeometries: modelInfo.reuseGeometries !== false,
-            });
-            model.on('loaded', modelLoaded);
-            model.on('error', loadError);
+            try {
+              const model = this._xktLoader.load({
+                id: modelId,
+                metaModelData: json,
+                xkt: arraybuffer,
+                excludeUnclassifiedObjects: true,
+                origin: modelInfo.origin || modelInfo.position,
+                scale: modelInfo.scale,
+                rotation: modelInfo.rotation,
+                matrix: modelInfo.matrix,
+                edges: this._edges,
+                saoEnabled: modelInfo.saoEnabled,
+                pbrEnabled: modelInfo.pbrEnabled,
+                backfaces: modelInfo.backfaces,
+                globalizeObjectIds: true,
+                reuseGeometries: modelInfo.reuseGeometries !== false,
+              });
+        
+              // Check if the model is undefined
+              if (!model) {
+                console.error('Failed to load model: model is undefined');
+                return;
+              }
+        
+              model.on('loaded', modelLoaded);
+              model.on('error', loadError);
+            } catch (error) {
+              return console.error('Error loading model:', error);
+            }
           },
           loadError
         );
+        //endthemmoi2062
       }
       setTimeout(() => {
           const check = this._areAllModelsChecked();
