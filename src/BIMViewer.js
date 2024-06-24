@@ -2430,13 +2430,13 @@ class BIMViewer extends Controller {
   /**
    * rerender project
   */
- rerenderProject() {
-  const myInspectors = document.getElementsByClassName('my-inspector');
-    for (let i = 0; i < myInspectors.length; i++) {
-      myInspectors[i].style.display = 'inline';
+  rerenderProject(id) {
+    const myInspectors = document.getElementsByClassName('my-inspector');
+      for (let i = 0; i < myInspectors.length; i++) {
+        myInspectors[i].style.display = 'inline';
+    }
+    this.showObjectProperties(id);
   }
-  this.showObjectProperties(this._idModelIns);
-}
 
 getIdModelIns() {
   return this._idModelIns;

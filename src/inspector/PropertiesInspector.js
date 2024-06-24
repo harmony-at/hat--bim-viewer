@@ -129,12 +129,12 @@ class PropertiesInspector extends Controller {
             html.push(`<p class="subsubtitle">No object selected</p>`);
         } else {
             html.push('<table class="xeokit-table">');
-            html.push(`<tr><td class="td1">Name:</td><td class="td2">${metaObject.name}</td></tr>`);
-            if (metaObject.type) {
-                html.push(`<tr><td class="td1">Class:</td><td class="td2">${metaObject.type}</td></tr>`);
-            }
-            html.push(`<tr><td class="td1">UUID:</td><td class="td2">${metaObject.originalSystemId}</td></tr>`);
-            html.push(`<tr><td class="td1">Viewer ID:</td><td class="td2">${metaObject.id}</td></tr>`);
+            html.push(`<tr><td class="td1">Name</td><td class="td2">${metaObject.name ? metaObject.name : 'Unnamed'}</td></tr>`);
+            // if (metaObject.type) {
+            //     html.push(`<tr><td class="td1">Class:</td><td class="td2">${metaObject.type}</td></tr>`);
+            // }
+            // html.push(`<tr><td class="td1">UUID:</td><td class="td2">${metaObject.originalSystemId}</td></tr>`);
+            // html.push(`<tr><td class="td1">Viewer ID:</td><td class="td2">${metaObject.id}</td></tr>`);
             const attributes = metaObject.attributes;
             if (attributes) {
                 for (let key in attributes) {
