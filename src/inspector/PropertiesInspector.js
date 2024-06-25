@@ -75,7 +75,10 @@ class PropertiesInspector extends Controller {
             if (event.target.classList.contains('td2')) {
                 // const propertyValue = event.target.innerText;
                 const versionId = event.target.getAttribute('version-id');
-                this._parent.triggerViewDocState(versionId);
+                //themmoi256
+                const docId = event.target.getAttribute('doc-id');
+                this._parent.triggerViewDocState({versionId: versionId, docId: docId});
+                //endthemmoi256
             }
         });
     }
@@ -159,7 +162,9 @@ class PropertiesInspector extends Controller {
                                             <table class="xeokit-table"><tbody>`);
                         for (let i = 0, len = properties.length; i < len; i++) {
                             const property = properties[i];
-                            html.push(`<tr><td class="td1">${property.name || property.label}</td><td class="td2" version-id='${property.verId}'>${property.value}</td></tr>`);
+                            //themmoi256
+                            html.push(`<tr><td class="td1">${property.name || property.label}</td><td class="td2" doc-id='${property.docId}' version-id='${property.verId}'>${property.value}</td></tr>`);
+                            //endthemmoi256
                         }
                         html.push(`</tbody></table>
                         </div>
