@@ -2443,6 +2443,17 @@ getIdModelIns() {
 }
   
   //endthemmoi2062
+  //themmoi266
+  /**
+   * rerender project
+  */
+ unLoadModelMarkup(list) {
+  this.loadAllModels();
+  list.map((item) => {
+      this._modelsExplorer.unloadModel(item);
+  })
+}
+//endthemmoi266
 }
 
 export { BIMViewer };
