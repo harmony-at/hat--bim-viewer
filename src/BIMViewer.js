@@ -2448,7 +2448,6 @@ getIdModelIns() {
    * rerender project
   */
  unLoadModelMarkup(list) {
-  this.loadAllModels();
   list.map((item) => {
       this._modelsExplorer.unloadModel(item);
   })
