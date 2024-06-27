@@ -542,7 +542,7 @@ import {
       const loadingIfc = document.getElementById("loadingIfc");
       if (loadingIfc) {
         isLoading
-          ? (loadingIfc.style.zIndex = "1")
+          ? (loadingIfc.style.zIndex = "2")
           : (loadingIfc.style.zIndex = "0");
       }
     }
