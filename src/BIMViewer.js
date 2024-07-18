@@ -32,6 +32,7 @@ import { ObjectsKdTree3 } from "./collision/ObjectsKdTree3.js";
 import { MarqueeSelectionTool } from "./toolbar/MarqueeSelectionTool.js";
 import { MeasureDistanceTool } from "./toolbar/MeasureDistanceTool.js";
 import { MeasureAngleTool } from "./toolbar/MeasureAngleTool.js";
+import { IssuesTool } from "./toolbar/IssuesTool.js";
 
 const hideEdgesMinDrawCount = 5; // FastNavPlugin enables dynamic edges when xeokit's per-frame draw count drops below this
 const scaleCanvasResolutionMinDrawCount = 1000; // FastNavPlugin switches to low-res canvas when xeokit's per-frame draw count rises above this
@@ -402,6 +403,10 @@ class BIMViewer extends Controller {
       buttonElement: toolbarElement.querySelector(".xeokit-fit"),
       active: false,
     });
+
+    //themmoi17
+    this._issuesTool = new IssuesTool(this, {});
+    //endthemmoi17
 
     // Allows Three-D and First Person toggle buttons to cooperatively switch
     // CameraControl#navMode between "orbit", "firstPerson" and "planView" modes
@@ -924,6 +929,27 @@ class BIMViewer extends Controller {
     this.dataCallback = dataCallback;
   }
 //endthemmoi2062
+
+//themmoi117
+  /**
+   * get data current issue
+   */
+  setIssueData(issueCallback, data) {
+    if (typeof issueCallback === 'function') {
+      issueCallback(data);
+    }
+  }
+
+  triggerIssueState(data) {
+    if (this.issueCallback) {
+      this.setIssueData(this.issueCallback, data);
+    }
+  }
+
+  setIssueCallback(issueCallback) {
+    this.issueCallback = issueCallback;
+  }
+  //endthemmoi117
   /**
    * Sets a batch of viewer configurations.
    *
@@ -2453,6 +2479,28 @@ getIdModelIns() {
   })
 }
 //endthemmoi266
+//themmoi17
+  /**
+   * set issue
+   */
+  setIssue(status, done) {
+    // this._circleDrawingMouseControl.activate();
+    status ? this._issuesTool.setActiveIssue(done) : this._issuesTool.setDeactiveIssue();
+  }
+  //endthemmoi17
+  //themmoi37
+  loadIssue(data) {
+    // this.plugin.viewer.scene.objects[data.entityId];
+    // this.jumpToObject(data.entityId);
+    this._issuesTool.loadIssue(data);
+  }
+  deleteIssue(id) {
+    this._issuesTool.deleteIssue(id);
+  }
+  clearIssue() {
+    this._issuesTool.clearIssue();
+  }
+  //endthemmoi37
 }
 
 export { BIMViewer };

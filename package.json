@@ -58,7 +58,7 @@
     "rollup-plugin-terser": "^7.0.2"
   },
   "dependencies": {
-    "@xeokit/xeokit-sdk": "github:harmony-at/hat-xeokit-sdk#4ee881d5bc337f6d1f49276d585a3df6c9401120",
+    "@xeokit/xeokit-sdk": "github:harmony-at/hat-xeokit-sdk#fce7849af500a72e70b69c9881b54f6d41e15b93",
     "http-server": "^13.0.2"
   }
 }
