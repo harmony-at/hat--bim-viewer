@@ -448,7 +448,11 @@ import {
     _jumpToInitialCamera() {
       const viewer = this.viewer;
       const scene = viewer.scene;
-      const aabb = scene.getAABB(scene.visibleObjectIds);
+      let aabb = scene.getAABB(scene.visibleObjectIds);
+      if(scene.visibleObjectIds.length > 100) {
+        const idFit = scene.visibleObjectIds[0];
+        aabb = scene.getAABB([idFit]);
+      }
       const diag = math.getAABB3Diag(aabb);
       const center = math.getAABB3Center(aabb, tempVec3a);
       const camera = scene.camera;
