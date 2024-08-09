@@ -2501,6 +2501,15 @@ getIdModelIns() {
     this._issuesTool.clearIssue();
   }
   //endthemmoi37
+  /**
+   * Change the viewer's background color.
+   *
+   * @param {Number[]} rgbColor Three-element array of RGB values, each in range ````[0..1]````.
+   */
+  changeBackground(rgbColor) {
+    this.viewer.scene.canvas.backgroundColor = rgbColor;
+    this._resetAction._resetCamera();
+  }
 }
 
 export { BIMViewer };
