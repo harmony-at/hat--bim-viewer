@@ -90,7 +90,7 @@ class PropertiesInspector extends Controller {
         }
         const propertySets = metaObject?.propertySetIds;
         //themmoi2062
-        this._parent.triggerDataPropertieState({idModel: metaObject.metaModels[0].id, objectId: objectId,  uuid: metaObject.originalSystemId});
+        this._parent.triggerDataPropertieState({idModel: metaObject.metaModels[0].id, objectId: objectId,  uuid: metaObject.originalSystemId, propertySets: propertySets});
         //endthemmoi2062
         if (propertySets && propertySets.length > 0) {
             this._propertiSets = propertySets;
@@ -163,7 +163,12 @@ class PropertiesInspector extends Controller {
                         for (let i = 0, len = properties.length; i < len; i++) {
                             const property = properties[i];
                             //themmoi256
-                            html.push(`<tr><td class="td1">${property.name || property.label}</td><td class="td2" doc-id='${property.docId}' version-id='${property.verId}'>${property.value}</td></tr>`);
+                            if(propertySet.name === 'URLs') {
+                                console.log('vaodayne')
+                                html.push(`<tr><td class="td1">${property.name || property.label}</td><td class="td2" doc-id='${property.docId}' version-id='${property.verId}'><a href="${property.value}" target="_blank">${property.value}</a></td></tr>`);
+                            } else {
+                                html.push(`<tr><td class="td1">${property.name || property.label}</td><td class="td2" doc-id='${property.docId}' version-id='${property.verId}'>${property.value}</td></tr>`);
+                            }
                             //endthemmoi256
                         }
                         html.push(`</tbody></table>
