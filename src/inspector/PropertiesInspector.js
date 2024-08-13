@@ -164,8 +164,7 @@ class PropertiesInspector extends Controller {
                             const property = properties[i];
                             //themmoi256
                             if(propertySet.name === 'URLs') {
-                                console.log('vaodayne')
-                                html.push(`<tr><td class="td1">${property.name || property.label}</td><td class="td2" doc-id='${property.docId}' version-id='${property.verId}'><a href="${property.value}" target="_blank">${property.value}</a></td></tr>`);
+                                html.push(`<tr><td class="td2" doc-id='${property.docId}' version-id='${property.verId}'><a href="${property.value}" target="_blank">${property.value}</a></td></tr>`);
                             } else {
                                 html.push(`<tr><td class="td1">${property.name || property.label}</td><td class="td2" doc-id='${property.docId}' version-id='${property.verId}'>${property.value}</td></tr>`);
                             }
