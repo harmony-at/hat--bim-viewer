@@ -127,9 +127,31 @@ class SectionTool extends Controller { // XX
 
     _initSectionMode() {
 
+        let isMouseDragging = false;
+    let startX, startY;
+    const moveThreshold = 5; // pixels
+
+    document.addEventListener('mousedown', (e) => {
+        if (e.button === 0) { // Chỉ xử lý chuột trái
+            startX = e.clientX;
+            startY = e.clientY;
+            isMouseDragging = false;
+        }
+    });
+
+    document.addEventListener('mousemove', (e) => {
+        if (e.button === 0 && !isMouseDragging) {
+            const deltaX = Math.abs(e.clientX - startX);
+            const deltaY = Math.abs(e.clientY - startY);
+            if (deltaX > moveThreshold || deltaY > moveThreshold) {
+                isMouseDragging = true;
+            }
+        }
+    });
+
         document.addEventListener('mouseup', (e) => {
 
-            if (e.which === 1) {
+            if (e.which === 1 && !isMouseDragging) {
 
                 const coords = getMouseCanvasPos(e);
 
