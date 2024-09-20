@@ -34,7 +34,7 @@ class SelectionTool extends Controller {
                     }
                   pickResult.entity.selected = !pickResult.entity.selected;
                   //themmoi206
-                  this._parent.showInspector(pickResult.entity.id);
+                  this._parent.showInspector({id: pickResult.entity.id, selected: pickResult.entity.selected});
                   //endthemmoi206
                 });
             } else {

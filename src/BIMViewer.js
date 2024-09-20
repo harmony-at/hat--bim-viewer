@@ -879,11 +879,11 @@ class BIMViewer extends Controller {
   /**
    * select prt to view inspector
    */
-  showInspector(id) {
+  showInspector(data) {
     //themmoi2062
-    this._idModelIns = id;
+    this._idModelIns = data.id;
     //endthemmoi2062
-    this._propertiesInspector.showObjectPropertySets(id);
+    this._propertiesInspector.showObjectPropertySets(data);
   }
 
   //endthemmoi206
@@ -1579,7 +1579,7 @@ class BIMViewer extends Controller {
       //themmoi2062
       this._idModelIns= objectId;
       //endthemmoi2062
-      this._propertiesInspector.showObjectPropertySets(objectId);
+      this._propertiesInspector.showObjectPropertySets({id: objectId, selected: true});
     }
     this.fire("openInspector", {});
 

@@ -83,14 +83,24 @@ class PropertiesInspector extends Controller {
         });
     }
 
-    showObjectPropertySets(objectId) {
-        const metaObject = this.viewer.metaScene.metaObjects[objectId];
+    showObjectPropertySets(data) {
+        if(this._objectId != data.id && !data.selected) {
+            return;
+        }
+        if(this._objectId === data.id && !data.selected) {
+            this._objectId = null;
+            this._parent.triggerDataPropertieState(null);
+            return this._setPropertySets(null, null);
+        } else {
+            this._objectId = data.id;
+        }
+        const metaObject = this.viewer.metaScene.metaObjects[data.id];
         if (!metaObject) {
             return;
         }
         const propertySets = metaObject?.propertySetIds;
         //themmoi2062
-        this._parent.triggerDataPropertieState({idModel: metaObject.metaModels[0].id, objectId: objectId,  uuid: metaObject.originalSystemId, propertySets: propertySets});
+        this._parent.triggerDataPropertieState({idModel: metaObject.metaModels[0].id, objectId: data.id,  uuid: metaObject.originalSystemId, propertySets: propertySets});
         //endthemmoi2062
         if (propertySets && propertySets.length > 0) {
             this._propertiSets = propertySets;
@@ -123,14 +133,15 @@ class PropertiesInspector extends Controller {
     }
 
     _setPropertySets(metaObject, propertySets) {
-        //themmoi206
-        this._modelId = metaObject.metaModels.id;
-         //endthemmoi206
+        
         const html = [];
         html.push(`<div class="element-attributes">`);
         if (!metaObject) {
             html.push(`<p class="subsubtitle">No object selected</p>`);
         } else {
+            //themmoi206
+            this._modelId = metaObject.metaModels.id;
+            //endthemmoi206
             html.push('<table class="xeokit-table">');
             html.push(`<tr><td class="td1">Name</td><td class="td2">${metaObject.name ? metaObject.name : 'Unnamed'}</td></tr>`);
             // if (metaObject.type) {
