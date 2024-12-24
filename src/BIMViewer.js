@@ -2501,6 +2501,17 @@ getIdModelIns() {
     this._issuesTool.clearIssue();
   }
   //endthemmoi37
+  //themmoi2412
+  disableButton() {
+    this._mutexActivation([
+        this._hideTool,
+        this._selectionTool,
+        this._marqueeSelectionTool,
+        this._sectionTool,
+        this._enableMeasurements ? this._measureDistanceTool : null,
+        this._enableMeasurements ? this._measureAngleTool : null,
+      ]);
+  }
   /**
    * Change the viewer's background color.
    *

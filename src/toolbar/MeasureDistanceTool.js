@@ -13,29 +13,29 @@ export class MeasureDistanceTool extends Controller {
         }
 
         const buttonElement = cfg.buttonElement;
+        //themmoi2412
+        const locale = this.viewer.localeService._locale;
 
         this._contextMenu = new ContextMenu({
             items: [
                 [
+                  //themmoi2412
                     {
                         getTitle: (context) => {
-                            return context.measurement.axisVisible ? "Hide Measurement Axis" : "Show Measurement Axis";
-                        },
-                        doAction: function (context) {
-                            context.measurement.axisVisible = !context.measurement.axisVisible;
-                        }
-                    },
-                    {
-                        getTitle: (context) => {
-                            return context.measurement.labelsVisible ? "Hide Measurement Labels" : "Show Measurement Labels";
+                          return context.measurement.labelsVisible
+                            ? this.getTitleByLocale(locale, 'hideLabels')
+                            : this.getTitleByLocale(locale, 'showLabels');
                         },
                         doAction: function (context) {
                             context.measurement.labelsVisible = !context.measurement.labelsVisible;
                         }
                     }
-                ], [
+                ]
+              , [
                     {
-                        title: "Delete Measurement",
+                        // title: "Delete Measurement",
+                      title: this.getTitleByLocale(locale, 'deleteMeasurement'),
+                        // title: this.viewer.localeService._locale === "en" ? "Delete Measurement" : this.viewer.localeService._locale === "vi" ? "Xóa đo lường" : "測定の削除",
                         doAction: function (context) {
                             context.measurement.destroy();
                         }
@@ -112,6 +112,38 @@ export class MeasureDistanceTool extends Controller {
             this.clear();
         });
     }
+
+    //themmoi2412
+    getTitleByLocale(locale, type) {
+        const titles = {
+          deleteMeasurement: {
+            en: "Delete Measurement",
+            vi: "Xóa đo lường",
+            ja: "測定の削除"
+          },
+          hideLabels: {
+            en: "Hide Measurement Labels",
+            vi: "Ẩn nhãn đo lường",
+            ja: "測定ラベルの表示"
+          },
+          showLabels: {
+            en: "Show Measurement Labels",
+            vi: "Hiển thị nhãn đo lường",
+            ja: "測定ラベルの非表示"
+          }
+        };
+    
+        switch (type) {
+          case 'deleteMeasurement':
+            return titles.deleteMeasurement[locale] || titles.deleteMeasurement.ja;
+          case 'hideLabels':
+            return titles.hideLabels[locale] || titles.hideLabels.ja;
+          case 'showLabels':
+            return titles.showLabels[locale] || titles.showLabels.ja;
+          default:
+            return '';
+        }
+      }
 
     getNumMeasurements() {
         return Object.keys(this._distanceMeasurementsPlugin.measurements).length;
