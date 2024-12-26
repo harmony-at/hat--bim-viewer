@@ -30,8 +30,9 @@ export class IssuesTool extends Controller {
       });
     }
   
-    setActiveIssue(done) {
-      this._issuesMouseControl.activate(done);
+    //themmoi2612
+    setActiveIssue(done, isPoint) {
+      this._issuesMouseControl.activate(done, isPoint);
     }
   
     setDeactiveIssue() {

@@ -2483,9 +2483,12 @@ getIdModelIns() {
   /**
    * set issue
    */
+
+  //themmoi2612
   setIssue(status, done) {
-    // this._circleDrawingMouseControl.activate();
-    status ? this._issuesTool.setActiveIssue(done) : this._issuesTool.setDeactiveIssue();
+    let point = null;
+    if(isPoint) point = isPoint;
+    status ? this._issuesTool.setActiveIssue(done, point) : this._issuesTool.setDeactiveIssue();
   }
   //endthemmoi17
   //themmoi37
