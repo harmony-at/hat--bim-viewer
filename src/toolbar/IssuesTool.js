@@ -40,8 +40,8 @@ export class IssuesTool extends Controller {
     }
   
     //themmoi37
-    loadIssue(data) {
-      this._issuesMouseControl.loadIssue(data);
+    loadIssue(data, isPoint) {
+      this._issuesMouseControl.loadIssue(data, isPoint);
     }
     deleteIssue(id) {
       this._issuesMouseControl.deleteIssue(id);

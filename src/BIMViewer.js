@@ -2485,17 +2485,18 @@ getIdModelIns() {
    */
 
   //themmoi2612
-  setIssue(status, done) {
+  setIssue(status, done, isPoint) {
     let point = null;
     if(isPoint) point = isPoint;
     status ? this._issuesTool.setActiveIssue(done, point) : this._issuesTool.setDeactiveIssue();
   }
   //endthemmoi17
   //themmoi37
-  loadIssue(data) {
+  //themmoi2612
+  loadIssue(data, isPoint) {
     // this.plugin.viewer.scene.objects[data.entityId];
     // this.jumpToObject(data.entityId);
-    this._issuesTool.loadIssue(data);
+    this._issuesTool.loadIssue(data, isPoint);
   }
   deleteIssue(id) {
     this._issuesTool.deleteIssue(id);
